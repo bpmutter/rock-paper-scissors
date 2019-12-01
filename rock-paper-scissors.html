@@ -9,6 +9,52 @@
 
   <script type="text/javascript">
 
+      let playerSelection = prompt("rock, paper or scissors?")
+      playerSelection = playerSelection.toLowerCase();
+
+      let computerSelection = computerPlay();
+
+      function computerPlay(){
+        let computerGuess = Math.floor((Math.random() * 3)); //gets values of 0, 1 or 2 for computer guess
+        if (computerGuess==0){
+          return "rock";
+        }
+        else if (computerGuess==1) {
+          return "paper";
+        }
+        else if (computerGuess==2) {
+          return "scissors";
+        }
+
+      }
+    //  console.log(computerSelection);
+
+      function game(player, computer){
+
+
+        //player wins situations
+        if(
+          (player == "rock" && computer =="scissors") ||
+          (player == "paper" && computer=="rock") ||
+          (player == "scissors" && computer=="paper")
+        ){
+          return "you win!! woohoo"
+        }
+        //tie
+        if(player == game){
+          return "same guess, refresh and play again!"
+        }
+        //computer wins
+        else {
+          return "you lose, try again!"
+        }
+
+      }
+
+      console.log("You choose: " + playerSelection);
+      console.log("The computer chooses: " + computerSelection);
+      console.log(game(playerSelection,computerSelection));
+
 
 
 
