@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--Made by Ben Perlmutter as part of the Odin Project, Dec 6, 2019-->
+  <title>Rock Paper Scissors</title>
+  <style>
+    *{
+      padding: 0;
+      margin: 0;
+    }
+
+    body{
+      background-color: #000;
+      background-image: url('rps-background.png');
+      background-size: cover;
+      background-attachment: fixed;
+      font-family: monospace;
+    }
+    p{
+      font-size: 20px;
+    }
+
+    h1{
+      text-align: center;
+      padding-bottom: .5em;
+      font-size: 3em;
+      padding-left: -1em;
+      padding-right: -1em;
+    }
+
+    h3{
+      font-size: 1.6em
+    }
+
+    h2{
+      text-align: center;
+      padding-bottom: .5em;
+      font-size: 2em;
+    }
+    hr{
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+
+    ul{
+      list-style: none;
+      margin: 0 auto;
+
+    }
+    li{
+      float: left;
+      padding-left: 2.5em;
+      padding-right: 2.5em;
+
+    }
+    button:focus {
+      outline:0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      border: green 1px solid;
+      text: green;
+    }
+
+
+
+    #main{
+      opacity: .7;
+      background-color: #FFF;
+      margin-top: 5em;
+      height: 30em;
+      width: 65%;
+      margin:0 auto;
+      margin-top: 8em;
+
+      padding: 3em;
+      border-radius: 5em;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    #centerBox{
+      margin:0 auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    #displayResults{
+      margin-top: 3em;
+    }
+
+
+    #signature{
+      position: absolute;
+      bottom: 1%;
+      left:1%;
+    }
+
+    .clear{
+      clear: both;
+    }
+
+    .playButton{
+      padding: 1em;
+      font-size: 15px;
+      border-radius: 2em;
+      font-family:monospace;
+      font-weight: bold;
+      border: black 1px solid;
+      width: 7em;
+      transition: all 0.07s;
+    }
+    .playing{
+      transform: scale(1.1);
+      border-color: gold;
+      box-shadow: 0 0 10px gold;
+    }
+
+
+
+  </style>
+</head>
+<body>
+  <div id="main">
+    <h1>Rock Paper Scissors</h1>
+    <div class="clear"></div>
+    <div id="centerBox">
+      <ul>
+        <li><button class="playButton" id="rockButton">Rock</button></li>
+        <li><button class="playButton" id="paperButton">Paper</button></li>
+        <li><button class="playButton" id="scissorsButton">Scissors</button></li>
+      </ul>
+    </div>
+
+
+
+    <div class="clear"></div>
+
+    <div id="displayResults">
+
+      <p><b>Your move: </b><span id="playerMoveDisplay"></span></p>
+      <p><b>Computer's move: </b><span id="computerMoveDisplay"></span></p>
+      <hr>
+      <h2>Total Score</h2>
+      <div id="centerBox">
+        <ul>
+          <li><h3>Your Score</h3>
+              <p id="centerBox"><span id="userScoreDisplay"></span></p></li>
+          <li><h3>Computer Score</h3>
+              <p id="centerBox"><span id="computerScoreDisplay"></span></p></li>
+        </ul>
+
+      </div>
+      <div id="centerBox" style="margin-top:2em"><p id="winnerDisplay"> </p></div>
+    </div>
+
+  </div>
+  <div id="signature"><p>Made by <a href="https://github.com/bpmutter">
+      Ben Perlmutter</a> as part of
+      <a href="https://www.theodinproject.com/">The Odin Project</a>.</p>
+  </div>
+
+  <script type="text/javascript">
+
+      //make score
+      let playerScore = 0;
+      let computerScore = 0;
+
+      let playerMove = undefined;
+      let computerMove = undefined;
+
+
+      document.getElementById('rockButton').addEventListener("click", function(){
+          playerMove= "rock";
+          computerMove = computerPlay();
+          runRound(playerMove, computerMove);
+          displayMove();
+          displayTotScore();
+          displayWinner();
+
+      });
+      document.getElementById('paperButton').addEventListener("click", function(){
+          playerMove = "paper";
+          computerMove = computerPlay();
+          runRound(playerMove, computerMove);
+          displayMove();
+          displayTotScore();
+          displayWinner();
+      });
+      document.getElementById('scissorsButton').addEventListener("click", function(){
+          playerMove = "scissors";
+          computerMove = computerPlay();
+          runRound(playerMove, computerMove);
+          displayMove();
+          displayTotScore();
+          displayWinner();
+      });
+
+
+      function runRound(playerRound, computerRound){
+
+        var computerSelection = computerRound;
+        var playerSelection = playerRound;
+
+        if(
+          (playerSelection == "rock" && computerSelection =="scissors") ||
+          (playerSelection == "paper" && computerSelection=="rock") ||
+          (playerSelection == "scissors" && computerSelection=="paper")
+        ){
+          return playerScore++;
+          console.log("player chooses: " + playerSelection + ". computer chooses: " + computerSelection + "... player wins!");
+        }
+        //tie
+        else if(playerSelection == computerSelection){
+          console.log("player chooses: " + playerSelection + ". computer chooses: " + computerSelection + "... tie!");
+          return
+        }
+        //computer wins
+        else {
+          console.log("player chooses: " + playerSelection + ". computer chooses: " + computerSelection + "... computerr wins!");
+          return computerScore++;
+        }
+
+      }
+      function displayMove(){
+        var playerMoveDisplay = document.querySelector("#playerMoveDisplay")
+        playerMoveDisplay.innerHTML = playerMove;
+
+        var computerMoveDisplay = document.querySelector("#computerMoveDisplay")
+        computerMoveDisplay.innerHTML = computerMove;
+      }
+
+      function displayTotScore(){
+        var userScoreDisplay = document.querySelector("#userScoreDisplay");
+        userScoreDisplay.innerHTML = playerScore;
+
+        var computerScoreDisplay = document.querySelector("#computerScoreDisplay");
+        computerScoreDisplay.innerHTML = computerScore;
+      }
+
+      function displayWinner(){
+        var winnerDisplay = document.querySelector("#winnerDisplay");
+        if (playerScore == 5)  winnerDisplay.innerHTML = "You win!!!";
+        if (computerScore == 5)  winnerDisplay.innerHTML = "Computer wins :(";
+      }
+
+      //the computer's turn
+      function computerPlay(){
+        let computerGuess = Math.floor((Math.random() * 3)); //gets values of 0, 1 or 2 for computer guess
+        if (computerGuess==0){
+          return "rock";
+        }
+        else if (computerGuess==1) {
+          return "paper";
+        }
+        else if (computerGuess==2) {
+          return "scissors";
+        }
+      }
+
+
+      function round(){
+        let playerSelection = playerPlay();
+        console.log("player chooses" +playerMove)
+        let computerSelection = computerPlay();
+
+          if(
+            (playerSelection == "rock" && computerSelection =="scissors") ||
+            (playerSelection == "paper" && computerSelection=="rock") ||
+            (playerSelection == "scissors" && computerSelection=="paper")
+          ){
+            console.log("player wins!")
+            return playerScore++;
+          }
+          //tie
+          else if(playerSelection == computerSelection){
+            console.log("tie!");
+            return
+          }
+          //computer wins
+          else {
+            console.log("computerr wins!");
+            return computerScore++;
+          }
+          console.log("You choose: " + playerSelection);
+          console.log("The computer chooses: " + computerSelection);
+          console.log("Your score: " + playerScore +". Computer score: "+
+              computerScore);
+        }
+
+        //have button click appear
+        function removeTransition(e){
+          if(e.propertyName != "transform") return; //skip if not a transform
+          this.classList.remove("playing");
+        };
+        const buttons = document.querySelectorAll(".playButtons");
+        buttons.forEach(button => button.addEventListener("transitionend", removeTransition));
+
+  </script>
+
+</body>
+</html>
